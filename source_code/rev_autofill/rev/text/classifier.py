@@ -3,7 +3,7 @@ import pandas as pd
 import sys
 import os
 
-from sklearn.externals import joblib
+import joblib
 from sklearn.model_selection import cross_val_predict
 from sklearn import svm
 import sklearn.metrics as metrics
