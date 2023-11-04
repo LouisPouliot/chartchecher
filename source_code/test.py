@@ -6,7 +6,7 @@ import json
 
 data ={'ohoh': 'stinky'}
 path_img = 'chartchecker_sample_charts\MultipleAxisExample.png'
-url = "https://6513-34-124-184-66.ngrok-free.app/"+"/analyze/"
+url = "https://1ee1-34-125-17-135.ngrok-free.app/"+"/analyze/"
 
 with open(path_img, 'rb') as img:
   name_img= os.path.basename(path_img)

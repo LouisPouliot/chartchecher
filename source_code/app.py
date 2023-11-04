@@ -288,14 +288,15 @@ class ExtractText(Resource):
         with open(filename, 'wb') as f:
             f.write(filedata)
 
+        print("test")
         # I need this file for wpd load image
         with open(for_digitizer, 'wb') as f:
             f.write(filedata)
 
-        reader = easyocr.Reader(['en'])
+        reader = easyocr.Reader(['en'], gpu=True)
         output = reader.readtext(filename)
         os.remove(filename)  # delete the file after OCR
-
+        print("test")
         x_arr = []
         y_arr = []
         w_arr = []
