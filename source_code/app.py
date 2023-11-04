@@ -31,7 +31,9 @@ class AnalyzeAuto(Resource):
         then does the analysis
         req: base_filename
         """
+        print("AnalyzeAuto")
         req = request.get_json()
+        print(req)
 
         base_filename = (req['base_filename'])
 
@@ -163,6 +165,7 @@ class CompleteAnalysis(Resource):
         The array is a suggestion message to the user
 
         """
+        print("CompleteAnalysis")
         req = request.get_json()
         origHeight = int(req['origHeight'])
         req.pop('origHeight')
@@ -196,6 +199,7 @@ class AutofillType(Resource):
         self.cache = global_cache
 
     def post(self):
+        print("AutofillType")
         base_filename = 'autofill'
         texts_filename = base_filename + '-texts.csv'
         preds_filename = base_filename + '-pred1-texts.csv'
@@ -272,6 +276,8 @@ class ExtractText(Resource):
         self.cache = global_cache
 
     def post(self):
+        print("ExtractText")
+
         req = request.get_json()
         filedata = json.dumps(req['filedata'])  # raw string
         filedata = filedata.split('base64')[-1]  # processed base64 string
@@ -320,6 +326,8 @@ class ExtractText(Resource):
             'text': text_arr,
             'type': type_arr
         }
+
+        print(send_to_frontend)
 
         return send_to_frontend
 
