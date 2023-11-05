@@ -19,7 +19,7 @@ from PIL import Image
 import requests
 
 SAMPLES_DIRECTORY = 'chartchecker_sample_charts/'
-
+ANALYSIS_SERVER_URL = "https://1ee1-34-125-17-135.ngrok-free.app/"+"/analyze/"
 
 class AnalyzeAuto(Resource):
     def __init__(self, global_cache):
@@ -193,7 +193,6 @@ class CompleteAnalysis(Resource):
 
         return 'successfully saved data'
 
-
 class AutofillType(Resource):
     def __init__(self, global_cache):
         self.cache = global_cache
@@ -270,6 +269,36 @@ class AutofillType(Resource):
             'type': typeX,
         }
 
+# extract graphdata by use of extraction server
+class AutofillGraphdata(Resource):
+    def __init__(self, global_cache):
+        self.cache = global_cache
+
+    def post(self):
+        """
+        takes a post request: filename
+        then issues a post request to server at ANALYSIS_SERVER_URL
+        finaly processes raw data and returns results to frontend
+        req: base_filename
+        """
+        print("AutofillGraph")
+
+        req = request.get_json()
+        img_path = 'chartchecker_sample_charts/' + req['base_filename']
+
+        # send request to chart data extraction
+        with open(img_path, 'rb') as img:
+            files= {'image': img }
+            with requests.Session() as s:
+                r = s.post(ANALYSIS_SERVER_URL,files=files)
+                results = json.loads(r.content.decode("utf-8"))
+                print(r.status_code, results['msg'])
+                # print(results)
+                with open("Output.json", "w") as text_file:
+                    text_file.write(r.content.decode("utf-8"))
+
+        send_to_frontend = ""
+        return send_to_frontend
 
 class ExtractText(Resource):
     def __init__(self, global_cache):

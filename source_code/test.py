@@ -4,7 +4,7 @@ from matplotlib import image
 from matplotlib import pyplot as plt 
 import json
 
-data ={'ohoh': 'stinky'}
+#data ={'ohoh': 'stinky'}
 path_img = 'chartchecker_sample_charts\MultipleAxisExample.png'
 url = "https://1ee1-34-125-17-135.ngrok-free.app/"+"/analyze/"
 
