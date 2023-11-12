@@ -362,11 +362,11 @@ ocr.addEventListener('click', OCR);
 enableBoxDrawing(); //initializes the box drawing
 //set all the event handlers and DOM
 const dataExtraction = document.getElementById('auto-extract-button');
-const ip = "https://ea91-35-188-139-145.ngrok-free.app";
+const ip = "https://e2b0-34-87-78-118.ngrok-free.app/";
 
 function AutoExtractData() {
 
-  const endpoint = ip + '/analyze';
+  const endpoint = ip + '/analyze/';
 
 
   toDataURL(imageURL,
@@ -384,7 +384,7 @@ function AutoExtractData() {
             },
           body: JSON.stringify(
             {
-              'filedata': dataUrl
+              'image': dataUrl
             })
         })
         .catch(function(error) {
