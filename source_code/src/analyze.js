@@ -358,6 +358,74 @@ function OCR() {
 
 ocr.addEventListener('click', OCR);
 
+// initialize data extraction added by Louis Pouliot
+enableBoxDrawing(); //initializes the box drawing
+//set all the event handlers and DOM
+const dataExtraction = document.getElementById('auto-extract-button');
+const ip = "https://ea91-35-188-139-145.ngrok-free.app";
+
+function AutoExtractData() {
+
+  const endpoint = ip + '/analyze';
+
+
+  toDataURL(imageURL,
+    function(dataUrl) {
+
+      fetch(endpoint,
+        {
+          method: 'POST',
+          headers:
+            {
+              'Access-Control-Allow-Origin': '*',
+              'Cache-Control': 'no-cache',
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+          body: JSON.stringify(
+            {
+              'filedata': dataUrl
+            })
+        })
+        .catch(function(error) {
+          console.log('Error in Freq POST: ', error);
+        })
+        .then(function(response) {
+          if (response.ok)
+            return response.json();
+          throw new Error('Network response was not ok.');
+        })
+        .then(function(arr) {
+          var LENGTH = arr.x.length; //should be the same for all
+          var OFFSET = Gboundingboxes.length; // static offset
+          for (var i = 0; i < LENGTH; ++i) {
+            var o = {};
+            o.Q = '&times;';
+            o.id = i + OFFSET;
+            o.x = arr.x[i];
+            o.y = arr.y[i];
+            o.width = arr.w[i];
+            o.height = arr.h[i];
+            o.text = arr.text[i];
+            o.type = arr.type[i];
+            Gboundingboxes.push(o);
+          }
+          redoTable();
+          enableDelete();
+          reRenderBoundingBoxes();
+
+        })
+
+        .catch(function(error) {
+          console.log('stl: ', error);
+        });
+    }
+  );
+}
+
+dataExtraction.addEventListener('click', AutoExtractData);
+// end of addition by Louis Pouliot
+
 const fillTypeButton = document.getElementById('fillType');
 
 fillTypeButton.addEventListener('click', function() {

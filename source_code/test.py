@@ -3,22 +3,33 @@ import os
 from matplotlib import image 
 from matplotlib import pyplot as plt 
 import json
+import base64
+from io import StringIO
+import PIL.Image
+import cv2
 
-#data ={'ohoh': 'stinky'}
-path_img = 'chartchecker_sample_charts\stand_your_ground.jpg'
-url = "https://f685-34-125-28-135.ngrok-free.app/"+"/analyze/"
+def encode_img(img_path):
+  img = cv2.imread(img_path)
+  jpg_img = cv2.imencode('.jpg', img)
+  b64_string = base64.b64encode(jpg_img[1]).decode('utf-8')
+  return b64_string
 
-with open(path_img, 'rb') as img:
-  name_img= os.path.basename(path_img)
-  files= {'image': img }
-  print(type(files['image']))
-  with requests.Session() as s:
-    r = s.post(url,files=files)
-    results = json.loads(r.content.decode("utf-8"))
-    print(r.status_code, results['msg'])
-    # print(results)
-    with open("Output.json", "w") as text_file:
-      text_file.write(r.content.decode("utf-8"))
+path_img = 'chartchecker_sample_charts/stand_your_ground.jpg'
+url = "https://e2b0-34-87-78-118.ngrok-free.app/"+"/analyze/"
+
+#with open(path_img, 'rb') as img:
+name_img = os.path.basename(path_img)
+img_base64 = encode_img(path_img)
+
+files= {'image': img_base64 }
+print(type(files['image']))
+with requests.Session() as s:
+  r = s.post(url,files=files)
+  results = json.loads(r.content.decode("utf-8"))
+  print(r.status_code, results['msg'])
+  # print(results)
+  with open("Output.json", "w") as text_file:
+    text_file.write(r.content.decode("utf-8"))
 
 clrs = ["blue","orange","green","red","purple","brown","pink","gray","olive","cyan"]
 img = image.imread(path_img) 

@@ -16,8 +16,9 @@ const manualSelectButton = document.getElementById('manual-select-button');
 manualSelectButton.addEventListener('click', wpd.acquireData.manualSelection);
 
 // added by Louis Pouliot
-const autoExtractButton = document.getElementById('auto-extract-button');
-manualSelectButton.addEventListener('click', wpd.acquireData.autoExtraction);
+// const autoExtractButton = document.getElementById('auto-extract-button');
+// manualSelectButton.addEventListener('click', wpd.acquireData.autoExtractionTool);
+// end of addition
 
 const manualAdjustButton = document.getElementById('manual-adjust-button');
 manualAdjustButton.addEventListener('click', wpd.acquireData.adjustPoints);

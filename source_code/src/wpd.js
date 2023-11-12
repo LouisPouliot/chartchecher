@@ -4541,7 +4541,7 @@ wpd.ManualSelectionTool = function () {
     }
 }();
 // added by Louis Pouliot
-wpd.ManualSelectionTool = function () {
+/* wpd.autoExtractionTool = function () {
     return function (a, b) {
         this.onAttach = function () {
             document.getElementById("manual-select-button").classList.add("pressed-button");
@@ -4577,7 +4577,7 @@ wpd.ManualSelectionTool = function () {
             c.preventDefault()
         }
     }
-}();
+}(); */
 // end of addition
 
 wpd.DeleteDataPointTool = function () {
