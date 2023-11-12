@@ -4540,6 +4540,46 @@ wpd.ManualSelectionTool = function () {
         }
     }
 }();
+// added by Louis Pouliot
+wpd.ManualSelectionTool = function () {
+    return function (a, b) {
+        this.onAttach = function () {
+            document.getElementById("manual-select-button").classList.add("pressed-button");
+            wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(a, b))
+        };
+        this.onMouseClick = function (c, d, e) {
+            if (a.dataPointsHaveLabels) {
+                d = b.getMetadataKeys();
+                null == d ? b.setMetadataKeys(["label"]) : "label" !== d[0] && b.setMetadataKeys(["label"].concat($jscomp.arrayFromIterable(d)));
+                d = a.dataPointsLabelPrefix + b.getCount();
+                var f = {};
+                b.addPixel(e.x, e.y, (f.label =
+                    d, f));
+                wpd.graphicsHelper.drawPoint(e, b.colorRGB.toRGBString(), d)
+            } else b.addPixel(e.x, e.y), wpd.graphicsHelper.drawPoint(e, b.colorRGB.toRGBString());
+            wpd.graphicsWidget.updateZoomOnEvent(c);
+            wpd.dataPointCounter.setCount(b.getCount());
+            a.dataPointsHaveLabels && c.shiftKey && wpd.dataPointLabelEditor.show(b, b.getCount() - 1, this)
+        };
+        this.onRemove = function () {
+            document.getElementById("manual-select-button").classList.remove("pressed-button")
+        };
+        this.onKeyDown = function (c) {
+            var d = b.getCount() - 1, e = b.getPixel(d), f = .5 / wpd.graphicsWidget.getZoomRatio();
+            if (wpd.keyCodes.isUp(c.keyCode)) e.y -= f; else if (wpd.keyCodes.isDown(c.keyCode)) e.y += f; else if (wpd.keyCodes.isLeft(c.keyCode)) e.x -= f; else if (wpd.keyCodes.isRight(c.keyCode)) e.x += f; else {
+                wpd.acquireData.isToolSwitchKey(c.keyCode) && wpd.acquireData.switchToolOnKeyPress(String.fromCharCode(c.keyCode).toLowerCase());
+                return
+            }
+            b.setPixelAt(d, e.x, e.y);
+            wpd.graphicsWidget.resetData();
+            wpd.graphicsWidget.forceHandlerRepaint();
+            wpd.graphicsWidget.updateZoomToImagePosn(e.x, e.y);
+            c.preventDefault()
+        }
+    }
+}();
+// end of addition
+
 wpd.DeleteDataPointTool = function () {
     return function (a, b) {
         wpd.graphicsWidget.getAllContexts();
@@ -6560,8 +6600,10 @@ wpd.acquireData = function () {
         load: function () {
             g = wpd.tree.getActiveDataset();
             h = wpd.appData.getPlotData().getAxesForDataset(wpd.tree.getActiveDataset());
-            null == h ? wpd.messagePopup.show(wpd.gettext("dataset-no-calibration"), wpd.gettext("calibrate-dataset")) : (wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.resetData(),
-                d(), wpd.autoExtraction.start(), wpd.dataPointCounter.setCount(), wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(h, g)), a(), wpd.graphicsWidget.forceHandlerRepaint(), wpd.dataPointCounter.setCount(g.getCount()))
+            null == h ? wpd.messagePopup.show(wpd.gettext("dataset-no-calibration"), wpd.gettext("calibrate-dataset")) 
+                    : (wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.resetData(), d(), wpd.autoExtraction.start(), wpd.dataPointCounter.setCount(), 
+                    wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(h, g)), a(), 
+                    wpd.graphicsWidget.forceHandlerRepaint(), wpd.dataPointCounter.setCount(g.getCount()))
         }, manualSelection: a, adjustPoints: e, deletePoint: b, clearAll: function () {
             0 >= g.getCount() || wpd.okCancelPopup.show(wpd.gettext("clear-data-points"), wpd.gettext("clear-data-points-text"), c, function () {
             })

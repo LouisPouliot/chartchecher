@@ -276,18 +276,29 @@ class AutofillGraphdata(Resource):
 
     def post(self):
         """
-        takes a post request: filename
+        takes a post request: filedata
         then issues a post request to server at ANALYSIS_SERVER_URL
         finaly processes raw data and returns results to frontend
-        req: base_filename
+        req: filedata
         """
         print("AutofillGraph")
 
         req = request.get_json()
-        img_path = 'chartchecker_sample_charts/' + req['base_filename']
+        filedata = json.dumps(req['filedata'])  # raw string
+        filedata = filedata.split('base64')[-1]  # processed base64 string
+        # these are the lines if you want to save the image
+        filedata = base64.b64decode(filedata)  # now decoded
+        filename = 'OCR.png'
+        for_digitizer = 'digitizer.png'
+        with open(filename, 'wb') as f:
+            f.write(filedata)
+        
+        # I need this file for wpd load image
+        with open(for_digitizer, 'wb') as f:
+            f.write(filedata)
 
         # send request to chart data extraction
-        with open(img_path, 'rb') as img:
+        with open(filename, 'rb') as img:
             files= {'image': img }
             with requests.Session() as s:
                 r = s.post(ANALYSIS_SERVER_URL,files=files)
