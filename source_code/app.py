@@ -357,7 +357,7 @@ class ExtractText(Resource):
             w_arr.append(w)
             h_arr.append(h)
             text_arr.append(i[1])
-            type_arr.append('u')
+            type_arr.append('')
 
         send_to_frontend = {
             'x': x_arr,

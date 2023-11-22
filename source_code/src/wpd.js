@@ -1568,6 +1568,7 @@ wpd.Dataset.prototype.getPixel = function (a) {
 wpd.Dataset.prototype.getAllPixels = function () {
     return this._dataPoints
 };
+// a -> # of pixels, b -> x coordinate, c -> y coordinate
 wpd.Dataset.prototype.setPixelAt = function (a, b, c) {
     a < this._dataPoints.length && (this._dataPoints[a].x = b, this._dataPoints[a].y = c)
 };
@@ -4510,6 +4511,7 @@ wpd.ManualSelectionTool = function () {
             wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(a, b))
         };
         this.onMouseClick = function (c, d, e) {
+            console.log("manual-select-button click");
             if (a.dataPointsHaveLabels) {
                 d = b.getMetadataKeys();
                 null == d ? b.setMetadataKeys(["label"]) : "label" !== d[0] && b.setMetadataKeys(["label"].concat($jscomp.arrayFromIterable(d)));
@@ -4524,9 +4526,11 @@ wpd.ManualSelectionTool = function () {
             a.dataPointsHaveLabels && c.shiftKey && wpd.dataPointLabelEditor.show(b, b.getCount() - 1, this)
         };
         this.onRemove = function () {
+            console.log("manual-select-button remove");
             document.getElementById("manual-select-button").classList.remove("pressed-button")
         };
         this.onKeyDown = function (c) {
+            console.log("manual-select-button key");
             var d = b.getCount() - 1, e = b.getPixel(d), f = .5 / wpd.graphicsWidget.getZoomRatio();
             if (wpd.keyCodes.isUp(c.keyCode)) e.y -= f; else if (wpd.keyCodes.isDown(c.keyCode)) e.y += f; else if (wpd.keyCodes.isLeft(c.keyCode)) e.x -= f; else if (wpd.keyCodes.isRight(c.keyCode)) e.x += f; else {
                 wpd.acquireData.isToolSwitchKey(c.keyCode) && wpd.acquireData.switchToolOnKeyPress(String.fromCharCode(c.keyCode).toLowerCase());
@@ -4541,30 +4545,22 @@ wpd.ManualSelectionTool = function () {
     }
 }();
 // added by Louis Pouliot
-/* wpd.autoExtractionTool = function () {
+wpd.AutoExtractionTool = function () {
     return function (a, b) {
         this.onAttach = function () {
-            document.getElementById("manual-select-button").classList.add("pressed-button");
-            wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(a, b))
+            document.getElementById("auto-extract-button").classList.add("pressed-button");
+            wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(a, b));
+            console.log("auto-extract-button attach");
         };
-        this.onMouseClick = function (c, d, e) {
-            if (a.dataPointsHaveLabels) {
-                d = b.getMetadataKeys();
-                null == d ? b.setMetadataKeys(["label"]) : "label" !== d[0] && b.setMetadataKeys(["label"].concat($jscomp.arrayFromIterable(d)));
-                d = a.dataPointsLabelPrefix + b.getCount();
-                var f = {};
-                b.addPixel(e.x, e.y, (f.label =
-                    d, f));
-                wpd.graphicsHelper.drawPoint(e, b.colorRGB.toRGBString(), d)
-            } else b.addPixel(e.x, e.y), wpd.graphicsHelper.drawPoint(e, b.colorRGB.toRGBString());
-            wpd.graphicsWidget.updateZoomOnEvent(c);
-            wpd.dataPointCounter.setCount(b.getCount());
-            a.dataPointsHaveLabels && c.shiftKey && wpd.dataPointLabelEditor.show(b, b.getCount() - 1, this)
-        };
+        /* this.onMouseClick = function () {
+            console.log("auto-extract-button click");
+        }; */
         this.onRemove = function () {
-            document.getElementById("manual-select-button").classList.remove("pressed-button")
+            console.log("auto-extract-button remove");
+            document.getElementById("auto-extract-button").classList.remove("pressed-button")
         };
         this.onKeyDown = function (c) {
+            console.log("auto-extract-button key");
             var d = b.getCount() - 1, e = b.getPixel(d), f = .5 / wpd.graphicsWidget.getZoomRatio();
             if (wpd.keyCodes.isUp(c.keyCode)) e.y -= f; else if (wpd.keyCodes.isDown(c.keyCode)) e.y += f; else if (wpd.keyCodes.isLeft(c.keyCode)) e.x -= f; else if (wpd.keyCodes.isRight(c.keyCode)) e.x += f; else {
                 wpd.acquireData.isToolSwitchKey(c.keyCode) && wpd.acquireData.switchToolOnKeyPress(String.fromCharCode(c.keyCode).toLowerCase());
@@ -4577,7 +4573,7 @@ wpd.ManualSelectionTool = function () {
             c.preventDefault()
         }
     }
-}(); */
+}();
 // end of addition
 
 wpd.DeleteDataPointTool = function () {
@@ -6562,6 +6558,11 @@ wpd.imageManager = function () {
 }();
 wpd = wpd || {};
 wpd.acquireData = function () {
+    function i() {
+        var k = new wpd.AutoExtractionTool(h, g);
+        wpd.graphicsWidget.setTool(k)
+    }
+
     function a() {
         var k = new wpd.ManualSelectionTool(h, g);
         wpd.graphicsWidget.setTool(k)
@@ -6602,9 +6603,9 @@ wpd.acquireData = function () {
             h = wpd.appData.getPlotData().getAxesForDataset(wpd.tree.getActiveDataset());
             null == h ? wpd.messagePopup.show(wpd.gettext("dataset-no-calibration"), wpd.gettext("calibrate-dataset")) 
                     : (wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.resetData(), d(), wpd.autoExtraction.start(), wpd.dataPointCounter.setCount(), 
-                    wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(h, g)), a(), 
+                    wpd.graphicsWidget.removeTool(), wpd.graphicsWidget.setRepainter(new wpd.DataPointsRepainter(h, g)), a(), i(),
                     wpd.graphicsWidget.forceHandlerRepaint(), wpd.dataPointCounter.setCount(g.getCount()))
-        }, manualSelection: a, adjustPoints: e, deletePoint: b, clearAll: function () {
+        },autoExtraction: i, manualSelection: a, adjustPoints: e, deletePoint: b, clearAll: function () {
             0 >= g.getCount() || wpd.okCancelPopup.show(wpd.gettext("clear-data-points"), wpd.gettext("clear-data-points-text"), c, function () {
             })
         }, undo: function () {
@@ -6624,10 +6625,12 @@ wpd.acquireData = function () {
                     e();
                     break;
                 case "e":
-                    f()
+                    f();
+                case "i":
+                    i()
             }
         }, isToolSwitchKey: function (k) {
-            return wpd.keyCodes.isAlphabet(k, "a") || wpd.keyCodes.isAlphabet(k, "s") || wpd.keyCodes.isAlphabet(k, "d") || wpd.keyCodes.isAlphabet(k, "e") ? !0 : !1
+            return wpd.keyCodes.isAlphabet(k, "i") || wpd.keyCodes.isAlphabet(k, "a") || wpd.keyCodes.isAlphabet(k, "s") || wpd.keyCodes.isAlphabet(k, "d") || wpd.keyCodes.isAlphabet(k, "e") ? !0 : !1
         }, editLabels: f
     }
 }();

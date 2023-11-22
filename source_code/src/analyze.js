@@ -362,7 +362,7 @@ ocr.addEventListener('click', OCR);
 enableBoxDrawing(); //initializes the box drawing
 //set all the event handlers and DOM
 const dataExtraction = document.getElementById('auto-extract-button');
-const ip = "https://e2b0-34-87-78-118.ngrok-free.app/";
+const ip = "https://b149-34-42-68-183.ngrok-free.app/";
 
 function AutoExtractData() {
 
@@ -423,7 +423,7 @@ function AutoExtractData() {
   );
 }
 
-dataExtraction.addEventListener('click', AutoExtractData);
+// dataExtraction.addEventListener('click', AutoExtractData);
 // end of addition by Louis Pouliot
 
 const fillTypeButton = document.getElementById('fillType');

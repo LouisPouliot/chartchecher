@@ -15,7 +15,7 @@ def encode_img(img_path):
   return b64_string
 
 path_img = 'chartchecker_sample_charts/stand_your_ground.jpg'
-url = "https://e2b0-34-87-78-118.ngrok-free.app/"+"/analyze/"
+url = "https://fa49-34-125-130-93.ngrok-free.app/"+"/analyze/"
 
 #with open(path_img, 'rb') as img:
 name_img = os.path.basename(path_img)
@@ -25,6 +25,7 @@ files= {'image': img_base64 }
 print(type(files['image']))
 with requests.Session() as s:
   r = s.post(url,files=files)
+  print("response.ok: ", r.ok) 
   results = json.loads(r.content.decode("utf-8"))
   print(r.status_code, results['msg'])
   # print(results)

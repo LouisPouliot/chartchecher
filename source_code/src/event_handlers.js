@@ -15,9 +15,9 @@ closeCsvWindow.addEventListener('click', function() {
 const manualSelectButton = document.getElementById('manual-select-button');
 manualSelectButton.addEventListener('click', wpd.acquireData.manualSelection);
 
-// added by Louis Pouliot
+//added by Louis Pouliot
 // const autoExtractButton = document.getElementById('auto-extract-button');
-// manualSelectButton.addEventListener('click', wpd.acquireData.autoExtractionTool);
+// autoExtractButton.addEventListener('click', wpd.acquireData.autoExtraction);
 // end of addition
 
 const manualAdjustButton = document.getElementById('manual-adjust-button');
