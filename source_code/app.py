@@ -14,6 +14,8 @@ from rev_autofill.run_text_role_classifier import auto_fill_type
 from utils import *
 import shutil
 import base64
+import random
+import time
 from PIL import Image
 
 import requests
@@ -34,6 +36,10 @@ class AnalyzeAuto(Resource):
         req = request.get_json()
 
         base_filename = (req['base_filename'])
+
+        delay = random.randint(10,15)
+        print("sleeping for " + str(delay) + " seconds")
+        time.sleep(delay)
 
         remove_files = False
         # these files are created by the manual mode, so we can use them if they exist

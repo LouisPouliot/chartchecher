@@ -1,14 +1,18 @@
 id,x,y,width,height,text,type
-0,4.0,29.0,719.0,64.0,Entwicklung,title
-1,20.0,232.0,46.0,28.0,200,y-axis-label
-2,445.0,265.0,217.0,55.0,Einfuhrung,legend-label
-3,447.0,315.0,234.0,44.0,einer,legend-label
-4,20.0,360.0,44.0,26.0,400,y-axis-label
-5,447.0,363.0,162.0,44.0,Funtion.,legend-label
-6,20.0,486.0,46.0,30.0,600,y-axis-label
-7,20.0,614.0,44.0,26.0,800,y-axis-label
-8,4.0,740.0,60.0,28.0,"1,000",y-axis-label
-9,47.0,106.0,16.0,25.0,0,y-axis-label
-10,72.0,755.0,16.0,16.0,1990,x-axis-label
-11,348.0,753.0,18.0,21.0,2000,x-axis-label
-12,624.0,753.0,12.0,22.0,2010,x-axis-label
+0,0.0,24.0,477.0,60.0,Gun deaths in Florida,title
+1,0.0,98.0,467.0,40.0,Number ofmurders committed using firearms,text-title
+2,34.0,143.0,15.0,18.0,0,y-axis-label
+3,14.0,240.0,36.0,24.0,200,y-axis-label
+4,356.0,272.0,169.0,107.0,2005 Florida enacted its 'Stand Your Ground' law,text-label
+5,15.0,341.0,34.0,20.0,400,y-axis-label
+6,15.0,441.0,34.0,20.0,600,y-axis-label
+7,530.0,512.0,46.0,32.0,721,text-label
+8,14.0,540.0,36.0,24.0,800,y-axis-label
+9,56.0,594.0,46.0,24.0,873,text-label
+10,2.0,640.0,48.0,24.0,"1,000",y-axis-label
+11,40.0,653.0,52.0,20.0,1990s,x-axis-label
+12,254.0,653.0,54.0,20.0,2000s,x-axis-label
+13,467.0,653.0,54.0,20.0,2010s,x-axis-label
+14,0.0,696.0,412.0,28.0,Source: Florida Department of Law Enforcement,text-label
+15,1.0,737.0,138.0,18.0,C. Cnan 16/02/2014,text-label
+16,532.0,735.0,61.0,20.0,REUTERS,text-label
