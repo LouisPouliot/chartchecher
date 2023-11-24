@@ -6,24 +6,25 @@ const misleadingFeaturesTexts = {
     // some information about the misleading features changes dynamically with the chart
     // the places where such information is inserted are marked with INSERT_...
     // the places where the axis titles are inserted for misleading features that are axis-specific are marked with TITLE
-    'missingLabels': ['Missing Labels', 
-                'The chart is missing the following labels: INSERT_ALL. This can be misleading as it may cause the chart to be taken out of context or make the shown data harder to understand.'],
-    'multipleAxis': ['Multiple Axis', 
-                'The chart has multiple axis. This can be misleading, as it might not be clear which data series belongs to which axis. If the axis have different scales, it can also distort comparisons between data series and result in misleading patterns.'],
-    'misleadingAR': ['Misleading Aspect Ratio', 
-                'The aspect ratio of the chart is misleading. This can make trends appear more extreme than they actually are.'],
-    'truncatedY': ['Truncated Y-Axis', 
-                `The Y-Axis (Y-TITLE) is truncated. The bottom most value is INSERT_TRUNC instead of a more traditional 0. This can be misleading as it shows the differences between the displayed values as larger than they actually are.`],
-    'invertedY': ['Inverted Y-Axis', 
-                `The Y-Axis (Y-TITLE) is inverted. This can be misleading as it makes upwards trends appear like they are downwards trends and vice versa.`],
-    'nonLinearX': ['Non-Linear X-Axis', 
-                'The X-Axis (X-TITLE) does not follow a linear scale. This can make it difficult to judge trends as the same distance on the axis does not always represent the same difference in the data.'],
-    'nonLinearY': ['Non-Linear Y-Axis', 
-                'The Y-Axis (Y-TITLE) does not follow a linear scale. This can make it difficult to judge trends as the same distance on the axis does not always represent the same difference in the data.'],
-    'inconsistentTicksX': ['Inconsistent Ticks on X-Axis', 
-                'The tick markers along the X-Axis (X-TITLE) are place in inconsistent intervals. This can make it harder to judge the values on the graph.'],
-    'inconsistentTicksY': ['Inconsistent Ticks on Y-Axis', 
-                'The tick markers along the Y-Axis (Y-TITLE) are place in inconsistent intervals. This can make it harder to judge the values on the graph']
+    'missingLabels': ['Fehlende Beschriftungen', 
+                'Das Diagramm enthält die folgenden Beschriftungen nicht: INSERT_ALL. Dies kann irreführend sein, da es dazu führen kann, dass das Diagramm aus dem Kontext genommen wird oder die dargestellten Daten schwerer verständlich sind.'],
+    'multipleAxis': ['Mehrere Achsen', 
+                'Das Diagramm hat mehrere Achsen. Dies kann irreführend sein, da möglicherweise nicht klar ist, welcher Datenreihe welche Achse gehört. Wenn die Achsen unterschiedliche Skalen haben, kann dies auch Vergleiche zwischen Datenreihen verzerren und zu irreführenden Mustern führen.'],
+    'misleadingAR': ['Irreführendes Seitenverhältnis', 
+                'Das Seitenverhältnis des Diagramms ist irreführend. Dies kann dazu führen, dass Trends extremer erscheinen, als sie tatsächlich sind.'],
+    'truncatedY': ['Gekürzte Y-Achse', 
+                `Die Y-Achse (Y-TITLE) ist gekürzt. Der unterste Wert ist INSERT_TRUNC anstelle von 0. Dies kann irreführend sein, da die Unterschiede zwischen den angezeigten Werten größer erscheinen als sie tatsächlich sind.`],
+    'invertedY': ['Umgekehrte Y-Achse', 
+                `Die Y-Achse (Y-TITLE) ist umgekehrt. Dies kann irreführend sein, da steigende Trends wie fallende erscheinen können und umgekehrt.`],
+    'nonLinearX': ['Nicht-lineare X-Achse', 
+                'Die X-Achse (X-TITLE) folgt keiner linearen Skala. Dies kann es schwer machen, Trends zu beurteilen, da ein gleicher Abstand auf der Achse nicht immer den gleichen Unterschied in den Daten darstellt.'],
+    'nonLinearY': ['Nicht-lineare Y-Achse', 
+                'Die Y-Achse (Y-TITLE) folgt keiner linearen Skala. Dies kann es schwer machen, Trends zu beurteilen, da ein gleicher Abstand auf der Achse nicht immer den gleichen Unterschied in den Daten darstellt.'],
+    'inconsistentTicksX': ['Ungleichmäßige Markierungen auf der X-Achse', 
+                'Die Markierungen entlang der X-Achse (X-TITLE) sind in ungleichmäßigen Intervallen platziert. Dies kann es erschweren, die Werte auf dem Diagramm zu beurteilen.'],
+    'inconsistentTicksY': ['Ungleichmäßige Markierungen auf der Y-Achse', 
+                'Die Markierungen entlang der Y-Achse (Y-TITLE) sind in ungleichmäßigen Intervallen platziert. Dies kann es erschweren, die Werte auf dem Diagramm zu beurteilen']
+
 }
 
 // -----------------------------global variables---------------------------------
