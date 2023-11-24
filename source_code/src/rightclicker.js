@@ -21,7 +21,6 @@ function contextClick(info, tab){
 function imageSearch(service, query){
   var myServices = localStorage.services.split(',');
     if (service == 'auto') {
-      //TODO: add delay
       chrome.storage.sync.set({key: query}, function () {
       });
       const url = '/views/new_main.html';
