@@ -104,7 +104,7 @@
                     <div class="col">
                         <div class="card" id="misleading-features-card">
                             <div class="card-header" style="text-align: center">
-                                <h3 style="font-weight: bold;">Detected Misleading Features</h3>
+                                <h3 style="font-weight: bold;">Erkannte irreführende Merkmale</h3>
                             </div>
                             <div class="card-body">
                                 <ul class="list-group" id="misleading-features-list-group">
@@ -123,13 +123,13 @@
             <div class="row justify-content-center">
                 <div class="col">
                     <div class="p-1">
-                        <button type="button" class="btn btn-primary" id="toggle-button">Toggle Original/Control Chart</button>
+                        <button type="button" class="btn btn-primary" id="toggle-button">Wechseln zwischen Original- und Kontroll-Diagramm</button>
                     </div>
                 </div>
                 <div class="col justify-content-center align-items-center">
                     <div class="d-flex justify-content-end align-items-center">
                         <div class="p-1">
-                            <button type="button" class="btn btn-primary" id="show-all-button">Show All Detectable Features</button>
+                            <button type="button" class="btn btn-primary" id="show-all-button">Alle erkennbaren Merkmale anzeigen</button>
                         </div>
                     </div>
                 </div>
@@ -142,23 +142,23 @@
                 <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Right-click the image to copy or save it</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Rechtsklicken Sie das Bild, um es zu kopieren oder zu speichern.</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div>
                     <div class="modal-body">
 
-                        <div class="row justify-content-center">Select which content to share:</div>
+                        <div class="row justify-content-center">Wählen Sie aus, welchen Inhalt Sie teilen möchten:</div>
                         <div class="row" style="padding-bottom: 10px;">
                             <div class="col text-center">
                                 
                                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                     <label class="btn btn-primary active" id="wholeUIBTN">
-                                    <input type="radio" name="options" id="wholeUI" autocomplete="off" checked> Whole UI
+                                    <input type="radio" name="options" id="wholeUI" autocomplete="off" checked> Gesamte Benutzeroberfläche
                                     </label>
                                     <label class="btn btn-primary" id="chartOnlyBTN">
-                                    <input type="radio" name="options" id="chartOnly" autocomplete="off"> Only recommended chart
+                                    <input type="radio" name="options" id="chartOnly" autocomplete="off"> Nur empfohlenes Diagramm
                                     </label>
                                 </div>
                             
@@ -179,8 +179,8 @@
                 <div class="modal-content">
                     <div class="modal-header">
                     <div class="modal-title" id="exampleModalLongTitle">
-                        <h4>Check if the control chart correctly represents the original image.</h4>
-                        If the control chart looks similar to the original image, you can continue to the results, otherwise the data should be adjusted in the manual mode.
+                        <h4>Überprüfen Sie, ob das Kontroll-Diagramm das Originalbild korrekt darstellt.</h4>
+                        Wenn das Kontroll-Diagramm dem Originalbild ähnlich aussieht, können Sie mit den Ergebnissen fortfahren. Andernfalls sollten die Daten im manuellen Modus angepasst werden.
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -192,7 +192,7 @@
                             <div class="col-6">
                                 <div class="card h-100">
                                     <div class="card-header" style="text-align: center">
-                                        <h3 style="font-weight: bold;">Original Image</h3>
+                                        <h3 style="font-weight: bold;">Originalbild</h3>
                                     </div>
                                     <div class="card-body">
                                         <div>
@@ -204,7 +204,7 @@
                             <div class="col-6">
                                 <div class="card h-100">
                                     <div class="card-header" style="text-align: center">
-                                        <h3 style="font-weight: bold;">Control Chart</h3>
+                                        <h3 style="font-weight: bold;">Kontroll-Diagramm</h3>
                                     </div>
                                     <div class="card-body">
                                         <div class="row align-items-center h-100">
@@ -226,8 +226,8 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" id="manualModeBTN">Open manual mode</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Continue</button>
+                        <button type="button" class="btn btn-secondary" id="manualModeBTN">Manuellen Modus öffnen</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fortfahren</button>
                       </div>
                 </div>
                 </div>
