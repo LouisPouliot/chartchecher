@@ -254,7 +254,10 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
     // when the original aspect ratio is misleading we need to draw the chart using the ideal aspect ratio
     if (!controlChart && detectedFeatures.misleadingAR[0]) {
         if(detectedFeatures.misleadingAR[1] > chartWidth / chartHeight) {
-            yAxisSize = xAxisSize / detectedFeatures.misleadingAR[1];       //when the ideal AR is larger than the original AR we need to make the y-axis smaller
+            temp = xAxisSize
+            xAxisSize = yAxisSize
+            yAxisSize = temp
+            //yAxisSize = xAxisSize / detectedFeatures.misleadingAR[1];       //when the ideal AR is larger than the original AR we need to make the y-axis smaller
         }
         else {
             xAxisSize = yAxisSize * detectedFeatures.misleadingAR[1];       //when the ideal AR is smaller than the original AR we need to make the x-axis smaller

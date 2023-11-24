@@ -1,18 +1,15 @@
 id,x,y,width,height,text,type
-0,0.0,24.0,477.0,60.0,Gun deaths in Florida,title
-1,0.0,98.0,467.0,40.0,Number ofmurders committed using firearms,text-title
-2,34.0,143.0,15.0,18.0,0,y-axis-label
-3,14.0,240.0,36.0,24.0,200,y-axis-label
-4,356.0,272.0,169.0,107.0,2005 Florida enacted its 'Stand Your Ground' law,text-label
-5,15.0,341.0,34.0,20.0,400,y-axis-label
-6,15.0,441.0,34.0,20.0,600,y-axis-label
-7,530.0,512.0,46.0,32.0,721,text-label
-8,14.0,540.0,36.0,24.0,800,y-axis-label
-9,56.0,594.0,46.0,24.0,873,text-label
-10,2.0,640.0,48.0,24.0,"1,000",y-axis-label
-11,40.0,653.0,52.0,20.0,1990s,x-axis-label
-12,254.0,653.0,54.0,20.0,2000s,x-axis-label
-13,467.0,653.0,54.0,20.0,2010s,x-axis-label
-14,0.0,696.0,412.0,28.0,Source: Florida Department of Law Enforcement,text-label
-15,1.0,737.0,138.0,18.0,C. Cnan 16/02/2014,text-label
-16,532.0,735.0,61.0,20.0,REUTERS,text-label
+0,1.0,2.0,148.0,36.0,Anderung,Title
+1,4.0,34.0,190.0,26.0,Wassertemperatur,Title
+2,87.0,58.0,102.0,24.0,1880-2019,Title
+6,11.0,365.0,18.0,74.0,Relative Änderung in Grad Celcius,y-axis-title
+7,97.0,529.0,48.0,20.0,Jahr,x-axis-title
+13,36.0,108.0,29.0,19.0,1.0,y-axis-label
+14,43.0,228.0,21.0,17.0,0.5,y-axis-label
+15,43.0,347.0,21.0,20.0,0.0,y-axis-label
+16,38.0,467.0,25.0,18.0,-0.5,y-axis-label
+17,69.0,495.0,21.0,24.0,1900,x-axis-label
+18,91.0,496.0,20.0,24.0,1925,x-axis-label
+19,112.0,494.0,20.0,26.0,1950,x-axis-label
+20,131.0,495.0,24.0,26.0,1975,x-axis-label
+21,154.0,496.0,22.0,25.0,2000,x-axis-label

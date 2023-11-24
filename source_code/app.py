@@ -21,6 +21,7 @@ from PIL import Image
 import requests
 
 SAMPLES_DIRECTORY = 'chartchecker_sample_charts/'
+DELAY = False
 
 
 class AnalyzeAuto(Resource):
@@ -37,14 +38,15 @@ class AnalyzeAuto(Resource):
 
         base_filename = (req['base_filename'])
 
-        delay = random.randint(10,15)
-        print("sleeping for " + str(delay) + " seconds")
-        time.sleep(delay)
+        if DELAY:
+            delay = random.randint(10,15)
+            print("sleeping for " + str(delay) + " seconds")
+            time.sleep(delay)
 
         remove_files = False
         # these files are created by the manual mode, so we can use them if they exist
         if os.path.isfile('c-pred1-texts.csv') and os.path.isfile('CompleteAnalysis_data.csv'):
-            remove_files = True
+            remove_files = False # TODO change to true when the tool is finished 
             box_filename = 'c-pred1-texts.csv'
             data_filename = 'CompleteAnalysis_data.csv'
         else:
