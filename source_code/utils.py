@@ -26,6 +26,7 @@ def detect_truncation(box_data, axis='y-axis', inverted=False):
     y_label_text = y_label.iloc[0]['text']
     y_label_max = y_label.iloc[len(y_label)-1]['y']
     truncated = False
+    # check if axis starts at zero and if axis crosses zero (chart is not truncated if it extends from -1 to +1)
     if (extract_float(y_label_text) != 0 ) and (np.sign(extract_float(y_label_text)) == np.sign(extract_float(y_label_max))):
         truncated = True
 
