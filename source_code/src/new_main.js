@@ -537,7 +537,6 @@ function drawMisleadFeaturesList() {
         //first handle features that are not axis specific (only axis-specifc features end with X or Y)
         if (!/.*[XY]$/.test(feature)) {
             if (detectedFeatures[feature][0]) {
-                console.log(feature.toString())
                 appendMisleadingFeature(misleadingFeaturesDiv, feature, misleadingFeaturesTexts[feature][0], inserter(feature)
             )}
         } else {          //handle axis-specific features and loop through all axes
