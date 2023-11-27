@@ -23,7 +23,9 @@ const misleadingFeaturesTexts = {
     'inconsistentTicksX': ['Ungleichmäßige Markierungen auf der X-Achse', 
                 'Die Markierungen entlang der X-Achse (X-TITLE) sind in ungleichmäßigen Intervallen platziert. Dies kann es erschweren, die Werte auf dem Diagramm zu beurteilen.'],
     'inconsistentTicksY': ['Ungleichmäßige Markierungen auf der Y-Achse', 
-                'Die Markierungen entlang der Y-Achse (Y-TITLE) sind in ungleichmäßigen Intervallen platziert. Dies kann es erschweren, die Werte auf dem Diagramm zu beurteilen']
+                'Die Markierungen entlang der Y-Achse (Y-TITLE) sind in ungleichmäßigen Intervallen platziert. Dies kann es erschweren, die Werte auf dem Diagramm zu beurteilen'],
+    'none': ['Keine irreführenden Merkmale gefunden',
+        'Das Diagramm enthält keine Irreführenden Merkmale die durch den ChartChecker erkannt werden können!'],
 
 }
 
@@ -54,7 +56,8 @@ var detectedFeatures = {        //object represents all detectable misleading fe
     "nonLinearX": [false],                  //can store multiple booleans if there are multiple x-axis
     "nonLinearY": [false],                  //can store multiple booleans if there are multiple y-axis
     "inconsistentTicksX": [false],
-    "inconsistentTicksY": [false]
+    "inconsistentTicksY": [false],
+    "none": [true]                          //default is true as the chart is not misleading if no misleading features are detected
 }
 
 
@@ -534,6 +537,7 @@ function drawMisleadFeaturesList() {
         //first handle features that are not axis specific (only axis-specifc features end with X or Y)
         if (!/.*[XY]$/.test(feature)) {
             if (detectedFeatures[feature][0]) {
+                console.log(feature.toString())
                 appendMisleadingFeature(misleadingFeaturesDiv, feature, misleadingFeaturesTexts[feature][0], inserter(feature)
             )}
         } else {          //handle axis-specific features and loop through all axes
