@@ -126,10 +126,12 @@ def check_axis_consistency(axis_data):
     else: 
         raise Exception("Somehow the axis is either a X-axis or a Y-axis")
     axis_data = axis_data.sort_values(by=['midpoint'])      #sort the dataframe by the midpoint of the bounding boxes to ensure they are in the correct order
+    print('midpoints: ', axis_data['midpoint'])
     distances_to_next_label = axis_data['midpoint'].diff(periods=-1).dropna()
+    print('distances_to_next_label', distances_to_next_label)
 
     # printing only for now, change it later to return useful information
-    consistency_of_label_placements = calculate_conistency(distances_to_next_label, 0.05)
+    consistency_of_label_placements = calculate_conistency(distances_to_next_label, 0.20)
     if consistency_of_label_placements:
         print("The ticks across the "+axis_name+" are place consistently!")
     else:
@@ -138,10 +140,12 @@ def check_axis_consistency(axis_data):
 
     numeric_texts = None
     try:
+        # only calculate if distance between label values ist consistent, disregarding their physical placement on the axis, since we already checked that
         numeric_texts = axis_data['text'].apply(extract_float)
         value_difference_to_next_label = numeric_texts.diff(periods=-1).dropna()
-        distance_to_difference_factors = distances_to_next_label / value_difference_to_next_label
-        consistency_of_scale = calculate_conistency(distance_to_difference_factors, 0.05)
+        # distance_to_difference_factors = distances_to_next_label / value_difference_to_next_label
+        # consistency_of_scale = calculate_conistency(distance_to_difference_factors, 0.05)
+        consistency_of_scale = calculate_conistency(value_difference_to_next_label, 0.01)
 
         # printing only for now, change it later to return useful information
         if consistency_of_scale:

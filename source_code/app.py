@@ -38,6 +38,7 @@ class AnalyzeAuto(Resource):
 
         base_filename = (req['base_filename'])
 
+        # adds an artificial delay to the analysis to simulate the time it takes to run the tool
         if DELAY:
             delay = random.randint(10,15)
             print("sleeping for " + str(delay) + " seconds")
@@ -68,6 +69,8 @@ class AnalyzeAuto(Resource):
 
             # detect if any axis have inconsistencies (function can handle multiple x or y axis)
             nonLinearX, nonLinearY, inconsistentX, inconsistentY = detect_inconsistent_axis_scales(fn_b)
+
+            #nonLinearY = [False] 
 
             # detect if the graph has a misleading aspect ratio 
             # TODO: needs to be adjusted when the tool gets extended to handle charts with multiple graphs

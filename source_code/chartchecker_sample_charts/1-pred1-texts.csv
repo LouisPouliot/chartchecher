@@ -1,0 +1,16 @@
+id,x,y,width,height,text,type
+0,171,69,240,62,Anzahl,y-axis-title
+1,424,62,838,73,an,legend-label
+2,155,535,150,42,0,x-axis-label
+3,335,535,130,42,1,x-axis-label
+4,495,535,152,42,10,x-axis-label
+5,677,535,150,42,15,x-axis-label
+6,859,535,150,44,20,x-axis-label
+7,1041,535,152,44,24,x-axis-label
+8,104,491,52,34,0,y-axis-label
+9,101,437,59,30,5,y-axis-label
+10,101,374,55,41,20,y-axis-label
+11,110,310,43,48,35,y-axis-label
+12,108,239,48,50,50,y-axis-label
+13,106,173,48,46,65,y-axis-label
+14,36,335,34,59,k,y-axis-title
