@@ -1,0 +1,24 @@
+id,x,y,width,height,text,type
+0,177,27,756,43,Prozent der Studenten mit Perfektem Ergebniss,title
+1,82,72,50,26,0.06,y-axis-label
+2,70,180,60,24,0.045,y-axis-label
+3,82,286,48,24,0.03,y-axis-label
+4,70,392,60,24,0.015,y-axis-label
+5,1086,544,60,26,Jahr,x-axis-title
+6,135,510,5,14,1997,x-axis-label
+7,195,510,5,15,1998,x-axis-label
+8,255,509,5,17,1999,x-axis-label
+9,315,509,5,13,2000,x-axis-label
+10,375,509,5,13,2001,x-axis-label
+11,435,509,5,13,2002,x-axis-label
+12,495,509,5,15,2003,x-axis-label
+13,555,506,5,14,2004,x-axis-label
+14,615,510,5,13,2005,x-axis-label
+15,675,507,5,18,2006,x-axis-label
+16,735,507,5,18,2007,x-axis-label
+17,795,504,5,17,2008,x-axis-label
+18,855,506,5,17,2009,x-axis-label
+19,915,506,5,15,2010,x-axis-label
+20,975,503,5,17,2011,x-axis-label
+21,24,157,34,277,Prozent,y-axis-title
+22,94,490,39,34,0,y-axis-label

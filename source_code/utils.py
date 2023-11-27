@@ -67,8 +67,9 @@ def detect_missing_labels(box_data):
     new_axis_labels.sort()
     # add title and label for each axis to the list of possible types
     new_axis = [f(value) for value in new_axis_labels for f in (lambda x: x[:-5]+'title', lambda x: x)]
-    possible_types = ['title', 'x-axis-title', 'x-axis-label', 'y-axis-title', 'y-axis-label'] + new_axis +['legend-title', 'legend-label'] # we intentionally left out 'text-label' as that is optional
-    
+    # we intentionally left out 'text-label' as that is optional
+    # we also left out 'legend-title' and 'legend-label' as those are optional
+    possible_types = ['title', 'x-axis-title', 'x-axis-label', 'y-axis-title', 'y-axis-label'] + new_axis # +['legend-title', 'legend-label'] 
     missing = list(filter(lambda type: type not in type_values, possible_types))
     # if there are any missing labels, return them, otherwise return False
     if missing != []:
