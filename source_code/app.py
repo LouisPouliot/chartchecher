@@ -124,11 +124,11 @@ class AnalyzeAuto(Resource):
 
             # as the graph data in the csv file assumes a linear scale, we need to adjust the data if an axis is not linear
             # TODO: tool can currently only handle one graph, needs to be adjusted to alter the graph that belongs to the non-linear axis
-            if nonLinearX[0]:
+            """ if nonLinearX[0]:
                 formatted_graph_data = fix_non_linear_scales(formatted_graph_data, formatted_axis_data['x-axis']['ticks'], 'x')
             if nonLinearY[0]:
                 formatted_graph_data = fix_non_linear_scales(formatted_graph_data, formatted_axis_data['y-axis']['ticks'], 'y')
-
+ """
         except:
             # clean up files
             # os.remove(fn_d)
@@ -138,20 +138,20 @@ class AnalyzeAuto(Resource):
         
 
         send_to_frontend = {
-            'axisData': formatted_axis_data,            #dictionary with key being axis name and value being a dictionary with title and tick markers
+            'axisData': formatted_axis_data,            # dictionary with key being axis name and value being a dictionary with title and tick markers
             'graphData': formatted_graph_data,          # list of points to draw the graph
-            'aspectRatio': ar,                          #aspect ratio of the chart
-            'chartTitle': chart_title,                  #title of the chart
+            'aspectRatio': ar,                          # aspect ratio of the chart
+            'chartTitle': chart_title,                  # title of the chart
             'detectedFeatures': {   
-                "truncatedY": truncated,                #list of booleans describing which detected y axis are truncated (in the order of the axis)
-                "invertedY": inverted,                  #list of booleans describing which detected y axis are inverted (in the order of the axis)
-                "misleadingAR": misleadingAR,           #first entry is true if the AR is misleading, second is an improved AR
-                "missingLabels": missing_labels,        #first entry is true if there are missing labels, after is a list of which are missing
-                "multipleAxis": detected_axis,          #first entry is true if there are multiple axis, after are the names of the detected axis 
-                "nonLinearX": nonLinearX,               #list of booleans describing which detected x axis are non linear (in the order of the axis)
-                "nonLinearY": nonLinearY,               #list of booleans describing which detected y axis are non linear (in the order of the axis)
-                "inconsistentTicksX": inconsistentX,    #list of booleans describing which detected x axis have inconsistent tick placements (in the order of the axis)
-                "inconsistentTicksY": inconsistentY,     #list of booleans describing which detected y axis have inconsistent tick placements (in the order of the axis)
+                "truncatedY": truncated,                # list of booleans describing which detected y axis are truncated (in the order of the axis)
+                "invertedY": inverted,                  # list of booleans describing which detected y axis are inverted (in the order of the axis)
+                "misleadingAR": misleadingAR,           # first entry is true if the AR is misleading, second is an improved AR
+                "missingLabels": missing_labels,        # first entry is true if there are missing labels, after is a list of which are missing
+                "multipleAxis": detected_axis,          # first entry is true if there are multiple axis, after are the names of the detected axis 
+                "nonLinearX": nonLinearX,               # list of booleans describing which detected x axis are non linear (in the order of the axis)
+                "nonLinearY": nonLinearY,               # list of booleans describing which detected y axis are non linear (in the order of the axis)
+                "inconsistentTicksX": inconsistentX,    # list of booleans describing which detected x axis have inconsistent tick placements (in the order of the axis)
+                "inconsistentTicksY": inconsistentY,    # list of booleans describing which detected y axis have inconsistent tick placements (in the order of the axis)
                 "none": [not any([truncated[0], inverted[0], misleadingAR[0], missing_labels[0], detected_axis[0], nonLinearX[0], nonLinearY[0], inconsistentX[0], inconsistentY[0]])] #true if there are no detected features
             }
         }

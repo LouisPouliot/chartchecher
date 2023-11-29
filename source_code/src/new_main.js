@@ -203,6 +203,8 @@ function processBackendData(backendData) {
     xAxisData = xAxisData.map(axis => axisData[axis])
     yAxisData = yAxisData.map(axis => axisData[axis])
 
+    //console.log(xAxisData)
+
     chartAR = backendData['aspectRatio'];
     chartTitle = backendData['chartTitle'];
     //set height and width of the drawn charts based on the aspect ratio
@@ -215,6 +217,7 @@ function processBackendData(backendData) {
     }
     chartGraphData = JSON.stringify(backendData['graphData']);
     chartGraphData = JSON.parse(chartGraphData);
+    console.log(chartGraphData); //debug
     detectedFeatures = backendData['detectedFeatures'];
 }
 
@@ -237,6 +240,73 @@ function drawOriginalImage(elementToDraw='original-image') {
             }
         }
     );
+}
+
+/**
+ * calculate the positions of axis labels and Graph coordinates of the give axis
+ * so that the distance between the labels matches with their assigned value
+ * @param {'x' | 'y'} axisName name of the axis that is being calculated
+ * @param {int} axisNr number of the axis that is being calculated
+ */
+function calcLinearScales(axisName, axisNr){
+    // rebalance axis data first
+    let axisData = [];
+    if (axisName == 'x'){
+        axisData = xAxisData[axisNr]['ticks'];
+    }
+    if (axisName == 'y'){
+        axisData = yAxisData[axisNr]['ticks'];
+    }
+    let minVal = axisData[0]['value'];
+    let maxVal = axisData[axisData.length-1]['value'];
+    let intervalVal = (maxVal-minVal);
+    let minPos = axisData[0]['pos'];
+    let maxPos = axisData[axisData.length-1]['pos'];
+    let intervalPos = (maxPos-minPos);
+    let priorExpectedVals = [];
+    let newCoords = [];
+    for (let i = 0; i < axisData.length; i++) {
+        // calculate the value a label placed at the ex-position of the current label would have had
+        priorExpectedVals[i] = (intervalVal * ((axisData[i]['pos']-minPos)/intervalPos));
+        // console.log('priorExpectedVal: ' + priorExpectedVal[i]); // debug
+        // calculate the new position of the current label 
+        // so that the distance between the labels matches with their assigned value
+        axisData[i]['pos'] = minPos + (intervalPos * ((axisData[i]['value']-minVal)/intervalVal));
+    }
+    // calculate the new values of the Graph coordinates that had
+    for (let i = 1; i < chartGraphData.length; i++) {
+        let percentageCoords = (chartGraphData[i][axisName] - minVal) / intervalVal
+        /* console.log('biased ' + axisName + ' : ' + chartGraphData[i][axisName]); // debug
+        console.log('unbiased ' + axisName + ' : ' + percentageCoords); // debug */
+
+        let unbiasedPos = percentageCoords * intervalPos + minPos;
+        if (unbiasedPos < axisData[0]['pos']) {
+            // case 1: the value is smaller than the smallest label
+        }  else if (unbiasedPos >= axisData[axisData.length-1]['pos']) {
+            // case 2: the value is larger than, or equal to the largest label
+        } else {
+            // case 3: the value is between two labels
+            let i = 0;
+            while (unbiasedPos >= axisData[i]['pos']) {
+                if (unbiasedPos < axisData[i+1]['pos'])
+
+                i++;
+            }
+        }
+
+
+        // find relevant section of axis  
+
+        // calculate unbiased coordinate
+    }
+    if (axisName == 'x'){
+        xAxisData[axisNr]['ticks'] = axisData;
+    }
+    if (axisName == 'y'){
+        yAxisData[axisNr]['ticks'] = axisData;
+    }
+    // then calculate new coordinates of Graph data
+
 }
 
 /**
@@ -263,7 +333,9 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
             //yAxisSize = xAxisSize / detectedFeatures.misleadingAR[1];       //when the ideal AR is larger than the original AR we need to make the y-axis smaller
         }
         else {
-            xAxisSize = yAxisSize * detectedFeatures.misleadingAR[1];       //when the ideal AR is smaller than the original AR we need to make the x-axis smaller
+            yAxisSize *= 6;
+            //xAxisSize *= 0.5;
+            //xAxisSize = yAxisSize * detectedFeatures.misleadingAR[1];       //when the ideal AR is smaller than the original AR we need to make the x-axis smaller
         }
     }
 
@@ -273,6 +345,12 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
     let drawnTickValuesX = [];
 
     for (let i = 0; i < xAxisData.length; i++) {
+
+        // when the x-axis is non-linear we need to rebalance it 
+        /* if (!controlChart && detectedFeatures.nonLinearX[0]) {       
+            calcLinearScales('x', i);
+        } */
+
         //functions to get the domain and range out of the xTicks object (needed to correctly represent the ticks of the original image)
         let x0AxisTicks = xAxisData[i]['ticks'];
         let xOffset = x0AxisTicks[0].pos;
@@ -281,7 +359,9 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         drawnTickValuesX.push(xTicksDomain);     //needs to be saved to draw the ticks later because xTicksDomain can be overwritten
         let xTicksRange = x0AxisTicks.map(function (d) {return (d.pos - xOffset) / xFactor;});
 
-        if (!controlChart && detectedFeatures.nonLinearX[0]) {       //when the x-axis is non-linear we need to use the first and last value to create a linear scale
+        //when the x-axis is non-linear we need to use the first and last value to create a linear scale
+        if (!controlChart && detectedFeatures.nonLinearX[0]) {       
+            /* calcLinearScales('x', i); */
             xTicksDomain = [x0AxisTicks[0].value, x0AxisTicks[x0AxisTicks.length-1].value];
             xTicksRange = [0, xAxisSize];
         }
@@ -299,12 +379,19 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
     let drawnTickValuesY = [];
 
     for (let i = 0; i < yAxisData.length; i++) {
+
+        // when the y-axis is non-linear we need to rebalance it
+        if (!controlChart && detectedFeatures.nonLinearY[i]) {
+            calcLinearScales('y', i);
+        }
+
         //functions to get the domain and range out of the yTicks object (needed to correctly represent the ticks of the original image)
         let y0AxisTicks = yAxisData[i]['ticks'];
         let yOffset = y0AxisTicks[0].pos;
         let yFactor = (y0AxisTicks[y0AxisTicks.length-1].pos - yOffset) / yAxisSize;
         let yTicksDomain = y0AxisTicks.map(function (d) {return d.value;});
         drawnTickValuesY.push(yTicksDomain);     //needs to be saved to draw the ticks later in case yTicksDomain is overwritten
+        //console.log(drawnTickValuesY);
         let yTicksRange = y0AxisTicks.map(function (d) {return (d.pos - yOffset) / yFactor;});
 
         //when the y-axis is truncated we need to "shift" the existing scale to start at zero
@@ -321,10 +408,13 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
 
         //when the y-axis is non-linear we need to use the first and last value to create a linear scale
         if (!controlChart && detectedFeatures.nonLinearY[i]) {
-            yTicksDomain = [yTicksDomain[0].value, yTicksDomain[yTicksDomain.length-1].value];
+            //calcLinearScales('y', i);
+            yTicksDomain = [y0AxisTicks[y0AxisTicks.length-1].value, y0AxisTicks[0].value];
             yTicksRange = [yAxisSize, 0];
+            //console.log(yTicksDomain);
         }
 
+        //console.log(yTicksDomain);
         yScale.push(d3.scaleLinear()
                 .domain(yTicksDomain)
                 .range(yTicksRange.reverse()));    //reverse as the largest value needs to be first because the chart will be drawn "top to bottom"

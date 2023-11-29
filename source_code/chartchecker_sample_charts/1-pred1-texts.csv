@@ -1,5 +1,5 @@
 id,x,y,width,height,text,type
-0,171,69,240,62,Anzahl,y-axis-title
+0,171,69,240,62,Anzahl,title
 1,424,62,838,73,an,legend-label
 2,155,535,150,42,0,x-axis-label
 3,335,535,130,42,1,x-axis-label
