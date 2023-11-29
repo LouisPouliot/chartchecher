@@ -392,8 +392,8 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
             const elem = document.querySelector("#original-image-div");
             if(elem) {
                 const rect = elem.getBoundingClientRect();
-                chartDrawHeight = rect.height;
-                svg.attr('height',  + rect.height + 'px')   //adjust the height of the chart to be the same as the image
+                chartDrawHeight = rect.height * 0.9;
+                svg.attr('height',  + chartDrawHeight + 'px')   //adjust the height of the chart to be the same as the image
             }
         }
     }
