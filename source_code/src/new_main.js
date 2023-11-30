@@ -169,10 +169,10 @@ function drawUI(backendData) {
         $("#controlChartModal").modal('show');
     });
 
-    //process backend data into global variables
-    processBackendData(backendData);
     //draw the original image into the UI
     drawOriginalImage();
+    //process backend data into global variables
+    processBackendData(backendData);
     //draw the control chart into the UI
     drawChart(d3.select('#original-chart'), true, true)
     //draw the improved chart into the UI
@@ -217,7 +217,7 @@ function processBackendData(backendData) {
     }
     chartGraphData = JSON.stringify(backendData['graphData']);
     chartGraphData = JSON.parse(chartGraphData);
-    console.log(chartGraphData); //debug
+    //console.log(chartGraphData); //debug
     detectedFeatures = backendData['detectedFeatures'];
 }
 
@@ -264,46 +264,47 @@ function calcLinearScales(axisName, axisNr){
     let maxPos = axisData[axisData.length-1]['pos'];
     let intervalPos = (maxPos-minPos);
     let priorExpectedVals = [];
-    let newCoords = [];
+    let newAxisData = [];
     for (let i = 0; i < axisData.length; i++) {
         // calculate the value a label placed at the ex-position of the current label would have had
-        priorExpectedVals[i] = (intervalVal * ((axisData[i]['pos']-minPos)/intervalPos));
-        // console.log('priorExpectedVal: ' + priorExpectedVal[i]); // debug
+        priorExpectedVals[i] = (intervalVal * ((axisData[i]['pos']-minPos)/intervalPos)) + minVal;
         // calculate the new position of the current label 
         // so that the distance between the labels matches with their assigned value
-        axisData[i]['pos'] = minPos + (intervalPos * ((axisData[i]['value']-minVal)/intervalVal));
+        newAxisData.push({'pos': minPos + (intervalPos * ((axisData[i]['value']-minVal)/intervalVal)), 'value': axisData[i]['value']});
     }
-    // calculate the new values of the Graph coordinates that had
-    for (let i = 1; i < chartGraphData.length; i++) {
+    // calculate the new values of the Graph coordinates
+    for (let i = 0; i < chartGraphData.length; i++) {
         let percentageCoords = (chartGraphData[i][axisName] - minVal) / intervalVal
-        /* console.log('biased ' + axisName + ' : ' + chartGraphData[i][axisName]); // debug
-        console.log('unbiased ' + axisName + ' : ' + percentageCoords); // debug */
-
-        let unbiasedPos = percentageCoords * intervalPos + minPos;
-        if (unbiasedPos < axisData[0]['pos']) {
+        
+        let biasedPos = percentageCoords * intervalPos + minPos;
+        if (percentageCoords < 0 || percentageCoords >= 1) {
             // case 1: the value is smaller than the smallest label
-        }  else if (unbiasedPos >= axisData[axisData.length-1]['pos']) {
             // case 2: the value is larger than, or equal to the largest label
+            // in these case we can not accurately predict the unbiased coordinate
+            // so we use the distribution between the first and last label to estimate it
+            chartGraphData[i][axisName] = (minVal + percentageCoords * intervalVal);
         } else {
             // case 3: the value is between two labels
-            let i = 0;
-            while (unbiasedPos >= axisData[i]['pos']) {
-                if (unbiasedPos < axisData[i+1]['pos'])
-
-                i++;
+            // in this case we can accurately predict the unbiased coordinate
+            // by finding the two labels that the value is between and interpolating between them
+            let j = 0;  
+            while ( (axisName === "x" && biasedPos >= axisData[j]['pos']) || 
+                    (axisName === "y" && biasedPos <= axisData[j]['pos'])   ) {
+                if ( (axisName === "x" && biasedPos < axisData[j+1]['pos']) || 
+                     (axisName === "y" && biasedPos > axisData[j+1]['pos'])   ) {
+                    let percentageBetweenLabels = (biasedPos - axisData[j]['pos']) / (axisData[j+1]['pos'] - axisData[j]['pos']);
+                    chartGraphData[i][axisName] = (axisData[j]['value'] + percentageBetweenLabels * (axisData[j+1]['value'] - axisData[j]['value']));
+                    break;
+                }                
+                j++;
             }
         }
-
-
-        // find relevant section of axis  
-
-        // calculate unbiased coordinate
     }
     if (axisName == 'x'){
-        xAxisData[axisNr]['ticks'] = axisData;
+        xAxisData[axisNr]['ticks'] = newAxisData;
     }
     if (axisName == 'y'){
-        yAxisData[axisNr]['ticks'] = axisData;
+        yAxisData[axisNr]['ticks'] = newAxisData;
     }
     // then calculate new coordinates of Graph data
 
@@ -347,9 +348,9 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
     for (let i = 0; i < xAxisData.length; i++) {
 
         // when the x-axis is non-linear we need to rebalance it 
-        /* if (!controlChart && detectedFeatures.nonLinearX[0]) {       
+        if (!controlChart && detectedFeatures.nonLinearX[0]) {       
             calcLinearScales('x', i);
-        } */
+        }
 
         //functions to get the domain and range out of the xTicks object (needed to correctly represent the ticks of the original image)
         let x0AxisTicks = xAxisData[i]['ticks'];
@@ -360,8 +361,7 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         let xTicksRange = x0AxisTicks.map(function (d) {return (d.pos - xOffset) / xFactor;});
 
         //when the x-axis is non-linear we need to use the first and last value to create a linear scale
-        if (!controlChart && detectedFeatures.nonLinearX[0]) {       
-            /* calcLinearScales('x', i); */
+        if (!controlChart && detectedFeatures.nonLinearX[0]) {
             xTicksDomain = [x0AxisTicks[0].value, x0AxisTicks[x0AxisTicks.length-1].value];
             xTicksRange = [0, xAxisSize];
         }
@@ -408,10 +408,8 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
 
         //when the y-axis is non-linear we need to use the first and last value to create a linear scale
         if (!controlChart && detectedFeatures.nonLinearY[i]) {
-            //calcLinearScales('y', i);
             yTicksDomain = [y0AxisTicks[y0AxisTicks.length-1].value, y0AxisTicks[0].value];
             yTicksRange = [yAxisSize, 0];
-            //console.log(yTicksDomain);
         }
 
         //console.log(yTicksDomain);

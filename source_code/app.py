@@ -113,12 +113,12 @@ class AnalyzeAuto(Resource):
                 o['y'] = i[1]
                 formatted_graph_data.append(o)
 
-
             #format data of all axis
             formatted_axis_data = {}
             all_axis = detected_axis[1:]
             for axis in all_axis:
                 formatted_axis_data[axis] = extract_axis_data(fn_b, axis)
+            print(formatted_axis_data)
 
             #-------------------End of chart data extraction-------------------
 
