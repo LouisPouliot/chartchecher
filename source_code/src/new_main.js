@@ -1,5 +1,8 @@
 const portNumber = 5000;
 
+const HIDE_LABEL = "Verstecken";
+const SHOW_LABEL = "Zeigen";
+
 const SCALE = 1.5;
 const CHARTSIZE = 175*SCALE;  
 const MIN_HEIGHT = 80;
@@ -666,7 +669,7 @@ function appendMisleadingFeature(parentDiv, featureID, featureName, featureDescr
                             </div>
                             <div class="col-1">
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary" id="${featureID}">Hide</button>
+                                    <button type="button" class="btn btn-primary" id="${featureID}">` + HIDE_LABEL + `</button>
                                 </div>
                             </div>
                         </div>`)
@@ -680,14 +683,14 @@ function appendMisleadingFeature(parentDiv, featureID, featureName, featureDescr
  */
 function misleadingFeatureButtonClicked(id) {
     const button = d3.select('#'+id)
-    if (button.text() == 'Show') {
-        button.text('Hide')
+    if (button.text() == SHOW_LABEL) {
+        button.text(HIDE_LABEL)
         button.attr('class', 'btn btn-primary')
-    } else if (button.text() == 'Hide') {
-        button.text('Show')
+    } else if (button.text() == HIDE_LABEL) {
+        button.text(SHOW_LABEL)
         button.attr('class', 'btn btn-outline-primary')
     } else {
-        console.log('Error: button text is not Show or Hide')
+        console.log('Error: button text is not ' + SHOW_LABEL + ' or ' + HIDE_LABEL)
     }
 
     //if the id ends with a number, use that number as the axis number, otherwise use 0 (also used for all misleading features that are not axis specific)
