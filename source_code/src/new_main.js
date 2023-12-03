@@ -2,6 +2,7 @@ const portNumber = 5000;
 
 const SCALE = 1.5;
 const CHARTSIZE = 175*SCALE;  
+const MIN_HEIGHT = 80;
 const misleadingFeaturesTexts = {
     // some information about the misleading features changes dynamically with the chart
     // the places where such information is inserted are marked with INSERT_...
@@ -340,6 +341,8 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         }
     }
 
+    yAxisSize = Math.max(chartHeight, MIN_HEIGHT);
+
     //-----------------set x-axis scale-----------------
 
     let xScale = [];
@@ -395,11 +398,11 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         let yTicksRange = y0AxisTicks.map(function (d) {return (d.pos - yOffset) / yFactor;});
 
         //when the y-axis is truncated we need to "shift" the existing scale to start at zero
-        if(!controlChart && detectedFeatures.truncatedY[i]) {
+        /* if(!controlChart && detectedFeatures.truncatedY[i]) {
             let maxValue = yTicksDomain[yTicksDomain.length-1];
             let compressFactor = 1-(yTicksDomain[0]/maxValue);
             yTicksDomain = yTicksDomain.map(function (d) {return (d-maxValue)/compressFactor + maxValue;});
-        }
+        } */
 
         //when the y-axis is inverted we need to reverse the order of the ticks
         if(!controlChart && detectedFeatures.invertedY[i]) {
@@ -410,6 +413,11 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         if (!controlChart && detectedFeatures.nonLinearY[i]) {
             yTicksDomain = [y0AxisTicks[y0AxisTicks.length-1].value, y0AxisTicks[0].value];
             yTicksRange = [yAxisSize, 0];
+        }
+
+        //when the y-axis is truncated we need to "shift" the existing scale to start at zero
+        if(!controlChart && detectedFeatures.truncatedY[i]) {
+            yTicksDomain = [yTicksDomain[0], 0];
         }
 
         //console.log(yTicksDomain);

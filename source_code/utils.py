@@ -132,7 +132,7 @@ def check_axis_consistency(axis_data):
     #print('distances_to_next_label', distances_to_next_label)
 
     # printing only for now, change it later to return useful information
-    consistency_of_label_placements = calculate_conistency(distances_to_next_label, 0.10)
+    consistency_of_label_placements = calculate_conistency(distances_to_next_label, 0.15)
     if consistency_of_label_placements:
         print("The ticks across the "+axis_name+" are place consistently!")
     else:
