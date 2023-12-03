@@ -1,10 +1,10 @@
 // define all possible services
-const allServices = ['auto','manual'];
+const allServices = ['auto'];//,'manual'];
 
 
 var services = {
-    'auto': ['auto', 'Auto Analyze', '', 'image'],
-    'manual': ['manual', 'Manual Analyze', '', 'image']
+    'auto': ['auto', 'Auto Analyze', '', 'image']//,
+    //'manual': ['manual', 'Manual Analyze', '', 'image']
 };
 
 function contextClick(info, tab){
@@ -77,7 +77,7 @@ function create_singleoption() {
   var myServices = localStorage.services.split(',');
   var service = services[myServices[0]];
   var imageMenu = chrome.contextMenus.create({
-    "title" : "Reverse image search ("+service[0]+")",
+    "title" : "Automatische Analyse", // ("+service[0]+")",
     "type" : "normal",
     "contexts" : service.slice(3),
     "onclick" : contextClick
