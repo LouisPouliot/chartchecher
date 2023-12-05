@@ -51,6 +51,7 @@ var yAxisData;        //2d array containing all y-axis in ascending order [y-axi
 
 //data needed to draw the graphs
 var chartGraphData;
+var chartType;
 var detectedFeatures = {        //object represents all detectable misleading features; default is false but elements are arrays so that features can store necessary data for drawing of the charts
     "truncatedY": [false],
     "invertedY": [false],
@@ -106,12 +107,14 @@ function helpButtonClicked() {
 function toggleButtonClicked() {
     var originalImage = document.getElementById("original-image");
     var controlChart = document.getElementById("controlSVG");
-    if (originalImage.style.display === "none") {
-        originalImage.style.display = "block";
-        controlChart.style.display = "none";
-    } else {
-        originalImage.style.display = "none";
-        controlChart.style.display = "block";
+    if (chartType === 'line') { // this is only here because bar charts dont work properly yet
+        if (originalImage.style.display === "none") {
+            originalImage.style.display = "block";
+            controlChart.style.display = "none";
+        } else {
+            originalImage.style.display = "none";
+            controlChart.style.display = "block";
+        }
     }
 }
 
@@ -244,6 +247,7 @@ function processBackendData(backendData) {
     chartGraphData = JSON.stringify(backendData['graphData']);
     chartGraphData = JSON.parse(chartGraphData);
     //console.log(chartGraphData); //debug
+    chartType = backendData['chart_type'];  //line or bar
     detectedFeatures = backendData['detectedFeatures'];
 }
 
@@ -391,7 +395,7 @@ function drawBarChart(parentDiv, controlChart = false, hidden = false) {
         .attr('style',display)
         .html(`
         <table class="graph" >
-            <caption>Prozent die Abgestimmt haben</caption>
+            <caption>Prozent der Parteimitglieder die Abgestimmt haben</caption>
             <thead>
                 <tr>
                     <th scope="col">Item</th>

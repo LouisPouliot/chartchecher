@@ -1,6 +1,6 @@
 // define all possible services
-const allServices = ['auto','manual'];
-//const allServices = ['auto'];
+//const allServices = ['auto','manual'];
+const allServices = ['auto'];
 //const allServices = ['manual'];
 
 

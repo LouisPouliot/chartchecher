@@ -1764,7 +1764,7 @@ body, table, input, select, textarea {
 	@media (min-width:32em) {
 
 		.graph {
-            width:500px;
+            width:90%;
             height:200px;
 		}
 
@@ -1833,7 +1833,7 @@ body, table, input, select, textarea {
 			position:absolute;
 			top:-3em;
 			left:0;
-			width:100%;
+			width:80%;
 			font-weight:normal;
 			text-align:center;
             white-space:nowrap;
