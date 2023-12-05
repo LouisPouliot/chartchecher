@@ -11,16 +11,16 @@ function tutorialMain() {
     {
       element: '#original-card',
       popover: {
-        title: 'Input Chart',
-        description: 'Here the original image is shown for a direct comparison.',
+        title: 'Eingabediagramm',
+        description: 'Hier wird das Originalbild zum direkten Vergleich angezeigt.',
         position: 'mid-center'
       }
     },
     {
       element: '#recommended-card',
       popover: {
-        title: 'Alternative Chart',
-        description: 'This shows the alternative chart that we recommend, as it removes all the misleading features that are present in the original chart.',
+        title: 'Alternatives Diagramm',
+        description: 'Hier wird das alternative Diagramm angezeigt, das wir empfehlen, da in diesem alle irreführenden Merkmale entfernt wurden, die im Originaldiagramm erkannt wurden.',
         position: 'mid-center'
       }
     },
@@ -28,7 +28,7 @@ function tutorialMain() {
       element: '#misleading-features-card',
       popover: {
         title: 'List of detected misleading features',
-        description: 'This shows a list of all the misleading features that were detected in the original chart together with explanations. From here you can also choose to show or hide individual features in the recommended chart to further understand their effects.',
+        description: 'Hier wird eine Liste aller erkannten irreführenden Merkmale im Originaldiagramm zusammen mit Erklärungen angezeigt. Von hier aus können Sie auch auswählen, einzelne Merkmale im empfohlenen Diagramm anzuzeigen oder auszublenden, um ihre Auswirkungen besser zu verstehen.',
         position: 'mid-center'
       }
     },

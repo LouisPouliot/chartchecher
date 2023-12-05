@@ -1,10 +1,10 @@
 // define all possible services
-const allServices = ['auto'];//,'manual'];
+const allServices = ['auto','manual'];
 
 
 var services = {
-    'auto': ['auto', 'Auto Analyze', '', 'image']//,
-    //'manual': ['manual', 'Manual Analyze', '', 'image']
+    'auto': ['auto', 'Auto Analyze', '', 'image'],
+    'manual': ['manual', 'Manual Analyze', '', 'image']
 };
 
 function contextClick(info, tab){
