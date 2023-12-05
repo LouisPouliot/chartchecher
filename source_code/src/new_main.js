@@ -172,9 +172,9 @@ chrome.storage.sync.get(['key'], function (result) {
 function drawUI(backendData) {
 
     //shows the modal asking the user to confirm if the data was extracted correctly
-    $(document).ready(function(){
+    /* $(document).ready(function(){
         $("#controlChartModal").modal('show');
-    });
+    }); */
 
     console.log(backendData); //debug
 
@@ -192,8 +192,8 @@ function drawUI(backendData) {
         drawMisleadFeaturesList();
 
         //draw the control chart modal
-        drawOriginalImage('original-image-modal')
-        drawBarChart(d3.select('#control-chart-modal'), true)
+        //drawOriginalImage('original-image-modal')
+        //drawBarChart(d3.select('#control-chart-modal'), true)
     } else {
         //draw the original image into the UI
         drawOriginalImage();
@@ -207,8 +207,8 @@ function drawUI(backendData) {
         drawMisleadFeaturesList();
 
         //draw the control chart modal
-        drawOriginalImage('original-image-modal')
-        drawChart(d3.select('#control-chart-modal'), true)
+        //drawOriginalImage('original-image-modal')
+        //drawChart(d3.select('#control-chart-modal'), true)
     }
 }
 
@@ -395,7 +395,7 @@ function drawBarChart(parentDiv, controlChart = false, hidden = false) {
         .attr('style',display)
         .html(`
         <table class="graph" >
-            <caption>Prozent der Parteimitglieder die Abgestimmt haben</caption>
+            <caption>Prozent der Parteimitglieder die Zustimmen</caption>
             <thead>
                 <tr>
                     <th scope="col">Item</th>
@@ -783,22 +783,25 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
             yTicksDomain = yTicksDomain.map(function (d) {return (d-maxValue)/compressFactor + maxValue;});
         } */
 
-        //when the y-axis is inverted we need to reverse the order of the ticks
-        if(!controlChart && detectedFeatures.invertedY[i]) {
-            yTicksDomain = yTicksDomain.reverse();
-        }
-
         //when the y-axis is non-linear we need to use the first and last value to create a linear scale
         if (!controlChart && detectedFeatures.nonLinearY[i]) {
             yTicksDomain = [y0AxisTicks[y0AxisTicks.length-1].value, y0AxisTicks[0].value];
             yTicksRange = [yAxisSize, 0];
         }
 
+        //when the y-axis is inverted we need to reverse the order of the ticks
+        if(!controlChart && detectedFeatures.invertedY[i]) {
+            yTicksDomain = yTicksDomain.reverse();
+        }
+        
         //when the y-axis is truncated we need to "shift" the existing scale to start at zero
         if(!controlChart && detectedFeatures.truncatedY[i]) {
+            //yTicksDomain = yTicksDomain.concat([0]);
             yTicksDomain = [yTicksDomain[0], 0];
+            //yTicksDomain = [0, 2.5, 3.0, 3.25];
         }
 
+        console.log(yTicksDomain);
         //console.log(yTicksDomain);
         yScale.push(d3.scaleLinear()
                 .domain(yTicksDomain)
@@ -879,7 +882,7 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
     //chart title
     let titleColor = '#000000', title = chartTitle;
     if (!controlChart && detectedFeatures.missingLabels[0] && title == ' ') {
-        title = 'missing chart title';
+        title = 'Titel fehlt';
         titleColor = '#CC0000'
     }
     svg.append('text')
@@ -931,7 +934,7 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         //draw the axis title
         let xTitleColor = '#000000', xTitle = xAxisData[i]['title'];
         if (!controlChart && detectedFeatures.missingLabels[0] && xTitle == ' ') {
-            xTitle = 'missing x axis title';
+            xTitle = 'x Achsen Titel fehlt';
             xTitleColor = '#CC0000'
         }
         svg.append('text')
@@ -954,7 +957,7 @@ function drawChart(parentDiv, controlChart = false, hidden = false) {
         //draw the axis title
         let yTitleColor = '#000000', yTitle = yAxisData[i]['title'];
         if (!controlChart && detectedFeatures.missingLabels[0] && yTitle == ' ') {
-            yTitle = 'missing y axis title';
+            yTitle = 'y Achsen Titel fehlt';
             yTitleColor = '#CC0000'
         }
         svg.append('text')
@@ -1064,32 +1067,34 @@ function appendMisleadingFeature(parentDiv, featureID, featureName, featureDescr
  * @param {HTMLElement} id the ID of the button that was clicked
  */
 function misleadingFeatureButtonClicked(id) {
-    const button = d3.select('#'+id)
-    if (button.text() == SHOW_LABEL) {
-        button.text(HIDE_LABEL)
-        button.attr('class', 'btn btn-primary')
-    } else if (button.text() == HIDE_LABEL) {
-        button.text(SHOW_LABEL)
-        button.attr('class', 'btn btn-outline-primary')
-    } else {
-        console.log('Error: button text is not ' + SHOW_LABEL + ' or ' + HIDE_LABEL)
-    }
+    if (chartType == 'line') {
+        const button = d3.select('#'+id)
+        if (button.text() == SHOW_LABEL) {
+            button.text(HIDE_LABEL)
+            button.attr('class', 'btn btn-primary')
+        } else if (button.text() == HIDE_LABEL) {
+            button.text(SHOW_LABEL)
+            button.attr('class', 'btn btn-outline-primary')
+        } else {
+            console.log('Error: button text is not ' + SHOW_LABEL + ' or ' + HIDE_LABEL)
+        }
 
-    //if the id ends with a number, use that number as the axis number, otherwise use 0 (also used for all misleading features that are not axis specific)
-    let axisNr = id.match(/\d+$/);
-    axisNr = axisNr == null ? 0 : parseInt(axisNr);
-    //remove the number at the end from the id (if there was one)
-    id = id.replace(/\d+$/, '');
-    
-    //toggle the variable in the detectedFeatures object
-    detectedFeatures[id][axisNr] = !detectedFeatures[id][axisNr];
-    let oldChartSVG = document.getElementById('recommendedSVG');
-    if (oldChartSVG != null) {
-        oldChartSVG.remove();          //remove the old recommended chart so we can redraw it
+        //if the id ends with a number, use that number as the axis number, otherwise use 0 (also used for all misleading features that are not axis specific)
+        let axisNr = id.match(/\d+$/);
+        axisNr = axisNr == null ? 0 : parseInt(axisNr);
+        //remove the number at the end from the id (if there was one)
+        id = id.replace(/\d+$/, '');
+        
+        //toggle the variable in the detectedFeatures object
+        detectedFeatures[id][axisNr] = !detectedFeatures[id][axisNr];
+        let oldChartSVG = document.getElementById('recommendedSVG');
+        if (oldChartSVG != null) {
+            oldChartSVG.remove();          //remove the old recommended chart so we can redraw it
+        }
+        //redraw the recommended chart
+        let parentDiv = d3.select('#recommended-chart')
+        drawChart(parentDiv)
     }
-    //redraw the recommended chart
-    let parentDiv = d3.select('#recommended-chart')
-    drawChart(parentDiv)
 
 }
 

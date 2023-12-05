@@ -2,10 +2,10 @@ id,x,y,width,height,text,type
 0,38,0,386,35,Preisschwankungen,title
 1,39,31,390,36,Musliriegels,title
 2,66,70,56,24,3.25,y-axis-label
-3,31,215,16,46,Price,y-axis-title
+3,31,215,16,46,Preis,y-axis-title
 4,66,346,54,24,3.00,y-axis-label
 5,64,402,54,24,2.50,y-axis-label
-6,249,451,61,26,Month,x-axis-title
+6,249,451,61,26,Monat,x-axis-title
 7,136,429,13,19,1,x-axis-label
 8,162,430,12,18,2,x-axis-label
 9,187,429,13,19,3,x-axis-label
