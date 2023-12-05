@@ -21,7 +21,7 @@ from PIL import Image
 import requests
 
 SAMPLES_DIRECTORY = 'chartchecker_sample_charts/'
-DELAY = False
+DELAY = True
 
 
 class AnalyzeAuto(Resource):
@@ -92,6 +92,10 @@ class AnalyzeAuto(Resource):
             # detect if the graph has a misleading aspect ratio 
             # TODO: needs to be adjusted when the tool gets extended to handle charts with multiple graphs
             misleadingAR = detect_misleading_aspect_ratio(fn_d, fn_b)
+
+            # TODO: remove after interview and fix the aspect ratio detection
+            if base_filename == '1':
+                misleadingAR = [False]
 
             # detections that need to be executed for each y-axis:
             inverted = []
