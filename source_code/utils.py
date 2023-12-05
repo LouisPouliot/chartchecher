@@ -23,11 +23,16 @@ def detect_truncation(box_data, axis='y-axis', inverted=False):
     df = df.loc[df['type'] == axis+'-label']
     # extract row with min to check of text contains zero
     y_label = df[df['y'] == df['y'].max()] if not inverted else df[df['y'] == df['y'].min()]
-    y_label_text = y_label.iloc[0]['text']
-    y_label_max = y_label.iloc[len(y_label)-1]['y']
+    y_label_min = y_label.iloc[0]['text']
+    # extract row with max to check if axis is truncated
+    y_label = df[df['y'] == df['y'].min()] if not inverted else df[df['y'] == df['y'].max()]
+    y_label_max = y_label.iloc[0]['text']
+    # y_label_max = y_label.iloc[len(y_label)-1]['text']
     truncated = False
+    print('y_label_text: ', y_label_min)
+    print('y_label_max: ', y_label_max)
     # check if axis starts at zero and if axis crosses zero (chart is not truncated if it extends from -1 to +1)
-    if (extract_float(y_label_text) != 0 ) and (np.sign(extract_float(y_label_text)) == np.sign(extract_float(y_label_max))):
+    if (extract_float(y_label_min) != 0 ) and (np.sign(extract_float(y_label_min)) == np.sign(extract_float(y_label_max))):
         truncated = True
 
     return truncated
