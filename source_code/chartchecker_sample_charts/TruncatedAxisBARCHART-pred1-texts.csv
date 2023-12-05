@@ -1,0 +1,14 @@
+id,x,y,width,height,text,type
+0,66,24,449,39,Percent,title
+1,76,62,30,24,64,y-axis-label
+2,76,90,30,24,62,y-axis-label
+3,76,118,30,24,60,y-axis-label
+4,76,144,30,24,58,y-axis-label
+5,76,170,30,24,56,y-axis-label
+6,76,198,30,24,54,y-axis-label
+7,76,226,30,24,52,y-axis-label
+8,76,250,30,26,50,y-axis-label
+9,138,282,104,24,Partei1,x-axis-label
+10,274,282,118,26,Partei2,x-axis-label
+11,408,282,132,26,Partei3,x-axis-label
+12,258,315,142,29,Political,x-axis-title

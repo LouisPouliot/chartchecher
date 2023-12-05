@@ -44,14 +44,14 @@ class AnalyzeAuto(Resource):
             print("sleeping for " + str(delay) + " seconds")
             time.sleep(delay)
 
-        # the type of the chart can be identified by ChartOCR
-        # chartOCR supports line, bar and pie charts
-        # currently it is hard coded to be Line chart and other chart types are not supported
-        if base_filename == "TruncatedAxisBARCHART.png":
+        if base_filename == 'TruncatedAxisBARCHART':
             chart_type = 'bar'
-        else:
+            print("bar chart")
+            #send_to_frontend = {'chart_type': chart_type}
+            #Sreturn send_to_frontend
+        else :
             chart_type = 'line'
-
+        
         remove_files = False
         # these files are created by the manual mode, so we can use them if they exist
         if os.path.isfile('c-pred1-texts.csv') and os.path.isfile('CompleteAnalysis_data.csv'):
@@ -64,19 +64,28 @@ class AnalyzeAuto(Resource):
             data_filename = SAMPLES_DIRECTORY + base_filename + '_data.csv'
 
         try:
-            fn_d = data_filename
             fn_b = box_filename
+            fn_d = data_filename
 
             #-------------------Start of detection algorithms-------------------
 
+            """ if chart_type == 'line':  """  
             # detect if there are multiple x or y axis in the chart
             detected_axis, fn_b = detect_multiple_axis(fn_b)    #adjusted fn_b to point to a temporary file containing the data with adjusted axis types
+            """ else:
+                detected_axis = [False] """
 
             # detect if there are any important labels missing
             missing_labels = detect_missing_labels(fn_b)
 
-            # detect if any axis have inconsistencies (function can handle multiple x or y axis)
-            nonLinearX, nonLinearY, inconsistentX, inconsistentY = detect_inconsistent_axis_scales(fn_b)
+            if chart_type == 'line': 
+                # detect if any axis have inconsistencies (function can handle multiple x or y axis)
+                nonLinearX, nonLinearY, inconsistentX, inconsistentY = detect_inconsistent_axis_scales(fn_b)
+            else:
+                nonLinearX = [False]
+                nonLinearY = [False]
+                inconsistentX = [False]
+                inconsistentY = [False]
 
             #nonLinearY = [False] 
 
@@ -132,6 +141,7 @@ class AnalyzeAuto(Resource):
 
             # as the graph data in the csv file assumes a linear scale, we need to adjust the data if an axis is not linear
             # TODO: tool can currently only handle one graph, needs to be adjusted to alter the graph that belongs to the non-linear axis
+            # this has been outsourced to the frontend for now
             """ if nonLinearX[0]:
                 formatted_graph_data = fix_non_linear_scales(formatted_graph_data, formatted_axis_data['x-axis']['ticks'], 'x')
             if nonLinearY[0]:
@@ -150,7 +160,7 @@ class AnalyzeAuto(Resource):
             'graphData': formatted_graph_data,          # list of points to draw the graph
             'aspectRatio': ar,                          # aspect ratio of the chart
             'chartTitle': chart_title,                  # title of the chart
-            'chart_type': chart_type,                   # type of the chart ( in string form )
+            'chart_type': chart_type,                        # TODO: needs to be adjusted when the tool gets extended to handle different chart types
             'detectedFeatures': {   
                 "truncatedY": truncated,                # list of booleans describing which detected y axis are truncated (in the order of the axis)
                 "invertedY": inverted,                  # list of booleans describing which detected y axis are inverted (in the order of the axis)
