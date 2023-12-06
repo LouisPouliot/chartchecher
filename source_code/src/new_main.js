@@ -988,7 +988,7 @@ function drawMisleadFeaturesList() {
             //replace INSERT_ALL with a list of insert-values and split off the last element with an 'and' instead of a comma
             console.log(detectedFeatures[feature]);
             if (detectedFeatures[feature].length == 2) {
-                res = res.replace('INSERT_ALL', detectedFeatures[feature][1]);
+                res = res.replace('INSERT_ALL', detectedFeatures[feature][1]).replace('axis', 'Achsen').replace('title', 'Titel');
             } else {
                 res = res.replace('INSERT_ALL', detectedFeatures[feature].slice(1, detectedFeatures[feature].length - 1).join(', ') + ' und ' + detectedFeatures[feature][detectedFeatures[feature].length - 1]);
             }
@@ -1002,11 +1002,11 @@ function drawMisleadFeaturesList() {
         //replace axis titles
         if (res.includes('X-TITLE')) {               //tested if its an x-axis feature
             let axisTitle = xAxisData[axisNr]['title'];
-            let replacement = axisTitle == ' ' ? 'no title' : 'titled "' + axisTitle + '"';
+            let replacement = axisTitle == ' ' ? 'kein Titel' : 'mit Namen "' + axisTitle + '"';
             res = res.replace('X-TITLE', replacement);
         } else if (res.includes('Y-TITLE')) {        //tested if its an y-axis feature
             let axisTitle = yAxisData[axisNr]['title'];
-            let replacement = axisTitle == ' ' ? 'no title' : 'titled "' + axisTitle + '"';
+            let replacement = axisTitle == ' ' ? 'kein Titel' : 'mit Namen "' + axisTitle + '"';
             res = res.replace('Y-TITLE', replacement);
         }
         //remove any remaining INSERT strings (necessary for enumeration of inserts without set length)

@@ -2,7 +2,7 @@ id,x,y,width,height,text,type
 0,1,2,148,36,Anderung,title
 1,4,34,190,26,Wassertemperatur,title
 2,87,58,102,24,1880-2019,title
-6,11,365,18,74,Relative Änderung,y-axis-title
+6,11,365,18,74,Relative Änderung in Grad Celsius,y-axis-title
 7,97,529,48,20,Jahr,x-axis-title
 13,36,108,29,19,1.0,y-axis-label
 14,43,228,21,17,0.5,y-axis-label
