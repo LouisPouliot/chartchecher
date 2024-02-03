@@ -2,11 +2,11 @@ import requests
 import os
 from matplotlib import image 
 from matplotlib import pyplot as plt 
+from matplotlib.patches import Rectangle
 import json
 
-data ={'ohoh': 'stinky'}
-path_img = 'chartchecker_sample_charts\MultipleAxisExample.png'
-url = "https://3f89-34-143-230-239.ngrok-free.app"+"/analyze/"
+path_img = 'chartchecker_sample_charts/TruncatedAxisBARCHART.png'
+url = "https://eb36-34-147-68-230.ngrok-free.app"+"/analyze/"
 
 with open(path_img, 'rb') as img:
   name_img= os.path.basename(path_img)
@@ -24,9 +24,32 @@ clrs = ["blue","orange","green","red","purple","brown","pink","gray","olive","cy
 img = image.imread(path_img) 
 with open("Output.json") as data:
     data = json.loads(data.read())
-    if data["chart_type"] == 1:
+    if data["type"] == 0:
+      print("bar chart")
+      print(data["data_raw"])
+      print(data["data_value"])
       i = 0
-      for line in data["chart_data"]:
+      fig, ax = plt.subplots()
+      for bar in data["data_raw"]:
+        spielraum = data["max_value"] - data["min_value"]
+        width = bar[2]-bar[0]
+        height = bar[1]-bar[3]
+        ax.add_patch(Rectangle((bar[0], bar[3]), width, height,
+                      edgecolor=clrs[i],
+                      fill=False))
+        plt.plot(bar[0], bar[1], marker='v', color=clrs[i])
+        plt.plot(bar[2], bar[3], marker='v', color=clrs[i])
+        plt.text(bar[0]+(width/2),
+                 bar[3]+(height/2),
+                 round(data["min_value"] + (spielraum * data["data_value"][0][i]), 2),
+                 color=clrs[i],
+                 ha='center')
+        i= i+1
+    if data["type"] == 1:
+      print("line chart")
+      print(data["data_raw"])
+      i = 0
+      for line in data["data_raw"]:
         print("line:", i)
         for p in line:
           plt.plot(p[0], p[1], marker='v', color=clrs[i])
