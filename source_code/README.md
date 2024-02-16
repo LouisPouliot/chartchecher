@@ -28,13 +28,25 @@ After you have loaded the sample images, right click the image to load our exten
 Line Chart Analyzer.
 You can perform an Auto Analysis or Manual Analysis.
 
+# How to initialize the ChartOCR backend
+
+This requires access to the ChartOCR backend files.
+Visit https://colab.research.google.com/ and create a new project. Then import the chartocr_colab.ipynb notepad file.
+After that upload the backend data into the root directory of your google drive.
+Before running the notepad you have to create a ngrok api token and paste it into the free variable.
+When run, the notepad will start a server and print a ngrok link.
+That link is the url of the server.
+Unfortunately this url will change every time the server is started.
+
+The files relating to the ChartOCR backend are in the ocr folder in this project. 
+
 # Credits
 
 https://github.com/vdsabev/image-downloader
 
-
-
 https://github.com/GoogleChrome/chrome-extensions-samples/tree/master/api/downloads/download_links
+
+https://github.com/soap117/DeepRule
 
 # License
 
