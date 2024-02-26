@@ -20,5 +20,5 @@ id,x,y,width,height,text,type
 18,855,506,5,17,2009,x-axis-label
 19,915,506,5,15,2010,x-axis-label
 20,975,503,5,17,2011,x-axis-label
-21,24,157,34,277,Prozent,y-axis-title
+21,24,157,34,277,Prozent der Studenten,y-axis-title
 22,94,490,39,34,0,y-axis-label

@@ -27,7 +27,7 @@ function tutorialMain() {
     {
       element: '#misleading-features-card',
       popover: {
-        title: 'List of detected misleading features',
+        title: 'Liste der erkannten irreführenden Merkmale',
         description: 'Hier wird eine Liste aller erkannten irreführenden Merkmale im Originaldiagramm zusammen mit Erklärungen angezeigt. Von hier aus können Sie auch auswählen, einzelne Merkmale im empfohlenen Diagramm anzuzeigen oder auszublenden, um ihre Auswirkungen besser zu verstehen.',
         position: 'mid-center'
       }

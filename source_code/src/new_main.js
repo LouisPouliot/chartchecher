@@ -990,7 +990,7 @@ function drawMisleadFeaturesList() {
             if (detectedFeatures[feature].length == 2) {
                 res = res.replace('INSERT_ALL', detectedFeatures[feature][1]).replace('axis', 'Achsen').replace('title', 'Titel');
             } else {
-                res = res.replace('INSERT_ALL', detectedFeatures[feature].slice(1, detectedFeatures[feature].length - 1).join(', ') + ' und ' + detectedFeatures[feature][detectedFeatures[feature].length - 1]);
+                res = res.replace('INSERT_ALL', detectedFeatures[feature].slice(1, detectedFeatures[feature].length - 1).join(', ').replace('axis', 'Achsen').replace('title', 'Titel') + ' und ' + detectedFeatures[feature][detectedFeatures[feature].length - 1].replace('axis', 'Achsen').replace('title', 'Titel'))
             }
 
         }
