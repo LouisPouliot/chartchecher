@@ -82,6 +82,8 @@ class AnalyzeAuto(Resource):
                 # detect if any axis have inconsistencies (function can handle multiple x or y axis)
                 nonLinearX, nonLinearY, inconsistentX, inconsistentY = detect_inconsistent_axis_scales(fn_b)
             else:
+                # needs to be redone for other chart types
+                # e.g. bar chart can contain non-linear y axis but not x axis
                 nonLinearX = [False]
                 nonLinearY = [False]
                 inconsistentX = [False]
@@ -93,7 +95,7 @@ class AnalyzeAuto(Resource):
             # TODO: needs to be adjusted when the tool gets extended to handle charts with multiple graphs
             misleadingAR = detect_misleading_aspect_ratio(fn_d, fn_b)
 
-            # TODO: remove after interview and fix the aspect ratio detection
+            # TODO: remove and fix the aspect ratio detection
             if base_filename == '1':
                 misleadingAR = [False]
 
